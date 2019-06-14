@@ -37,4 +37,4 @@ Add the following to your Composer.require
 "docksal_composer" : "*",
 ```
 
-And run composer update loopy3025/docksal_composer
+And run `composer update`

@@ -1,0 +1,13 @@
+uuid: e862d4b8-0216-40e9-af1c-23ff61675c1f
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - lightning_media_slideshow
+_core:
+  default_config_hash: 1po0dPtmem85m2UbxUrU6srsrl9uLcI9sE60FLyb2ho
+id: media_slideshow
+label: Slideshow
+revision: 0
+description: 'A slideshow or carousel of media items.'

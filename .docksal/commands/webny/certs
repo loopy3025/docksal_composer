@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+## Import and convert the ny custom certs
+##
+## Usage: fin webny/certs
+
+if [[ ! -f /etc/pki/ca-trust/source/anchors/itsprivateroot.cer ]]; then
+    echo "Please export and copy the `itsprivateroot.cer` to the `/etc/pki/ca-trust/source/anchors/` directory!"
+fi
+
+mkdir -p .docksal/etc/openssl && cp /etc/pki/ca-trust/source/anchors/itsprivateroot.cer .docksal/etc/openssl/
+fin exec -T "sudo openssl x509 -inform der -in /var/www/.docksal/etc/openssl/itsprivateroot.cer -out /var/www/.docksal/etc/openssl/itsprivateroot.pem"
+echo "Adding itsprivateroot.pem and ca-bundle.crt to ca-certificates.crt..."
+fin exec -T "sudo -s eval 'cat /var/www/.docksal/etc/openssl/itsprivateroot.pem >> /etc/ssl/certs/ca-certificates.crt && cat /var/www/.docksal/etc/openssl/ca-bundle.crt >> /etc/ssl/certs/ca-certificates.crt && chmod 744 /etc/ssl/certs/ca-certificates.crt'"
+

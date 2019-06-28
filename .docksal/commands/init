@@ -19,8 +19,8 @@ esac
 
 # Import the certs
 # Should this be a different conditional?
-echo 'If this is a Windows machine, install the WebNY certs'
 if [[ machine == "MinGw" ]]; then
+  echo 'If this is a Windows machine, install the WebNY certs'
 	# Run this command manually for windows instead
   fin webny/certs
 fi

@@ -27,9 +27,9 @@ fi
 
 # Install project requirements
 echo 'Running Composer commands...'
-fin exec composer clear-cache
-fin exec COMPOSER_PROCESS_TIMEOUT=2000
-fin exec composer install
+fin composer clear-cache
+# fin exec COMPOSER_PROCESS_TIMEOUT=2000
+fin composer install
 
 # Set up blt
 cd $DOCROOT_PATH

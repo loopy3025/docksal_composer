@@ -1,0 +1,67 @@
+project:
+  machine_name: basebuild
+  prefix: BLT
+  human_name: 'Base Build'
+  profile:
+    name: lightning
+  local:
+    protocol: http
+    hostname: '${project.machine_name}.docksal'
+git:
+  default_branch: master
+  pre-commit: false
+  commit-msg:
+    pattern: '(.*?)'
+  hooks:
+    pre-commit: false
+drush:
+  aliases:
+    remote: '${project.machine_name}.test'
+    local: self
+    ci: self
+  default_alias: '${drush.aliases.local}'
+modules:
+  local:
+    enable: [dblog, devel, seckit, views_ui]
+    uninstall: [acquia_connector, shield]
+  ci:
+    enable: {  }
+    uninstall: [acquia_connector, shield]
+  dev:
+    enable: [acquia_connector, shield]
+    uninstall: {  }
+  test:
+    enable: [acquia_connector, shield]
+    uninstall: [devel, views_ui]
+  prod:
+    enable: [acquia_connector, shield]
+    uninstall: [devel, views_ui]
+disable-targets:
+  validate:
+    phpcs: true
+  git:
+    commit-msg: true
+    pre-commit: true
+validate:
+  twig:
+    filters: [rgba_string, luma, field_value, field_raw]
+    functions:
+      [
+        drupal_block,
+        drupal_field,
+        drupal_view,
+        drupal_block,
+        drupal_region,
+        drupal_entity,
+        drupal_field,
+        drupal_menu,
+        drupal_form,
+        drupal_image,
+        drupal_token,
+        drupal_config,
+        drupal_title,
+        drupal_url,
+        drupal_link,
+        drupal_messages,
+        drupal_breadcrumb,
+      ]

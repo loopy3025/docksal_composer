@@ -13,7 +13,7 @@ Clone this repository in a temporary location. Copy the .docksal folder and past
 
 *This is a work in progress.*
 
-Clone this repository in a temporary location. Copy the .docksal folder and paste it into your existing BLT Drupal site. 
+Clone this repository in a temporary location. Copy the /.docksal and /blt folders and paste them into your existing BLT Drupal site. 
 
 You will also need to copy the docroot/composer.json file and edit it to include all the projects in your site. 
 
@@ -56,7 +56,6 @@ You will note that Drupal Core is not included here, but blt is. blt will tell y
 
 If you are using any patches on any projects, you will need to indicate them in the composer file as well. Example:
 ```
-
         "patches": {
             "drupal/core": {
                 "config": "https://www.drupal.org/files/issues/2018-09-20/2915036-79.patch"

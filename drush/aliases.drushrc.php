@@ -9,4 +9,7 @@ $aliases['docksal'] = array(
 $aliases['self'] = array(
   'root' => '/var/www/docroot',
   'uri' => 'docksal-composer.docksal',
+  'path-aliases' => array(
+    '%drush-script' => 'fin drush' . $drush_major_version,
+  ),
 );

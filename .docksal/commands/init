@@ -26,10 +26,15 @@ if [[ machine == "MinGw" ]]; then
 fi
 
 # Install project requirements
+networksetup -setv6off Wi-Fi
 echo 'Running Composer commands...'
-fin composer clear-cache
+fin exec COMPOSER_MEMORY_LIMIT=-1
+fin exec COMPOSER_ALLOW_XDEBUG=1
+fin exec COMPOSER_DISABLE_XDEBUG_WARN=1
+fin exec composer clear-cache
 # fin exec COMPOSER_PROCESS_TIMEOUT=2000
-fin composer install
+fin exec composer install
+networksetup -setv6automatic Wi-Fi
 
 # Set up blt
 cd $DOCROOT_PATH

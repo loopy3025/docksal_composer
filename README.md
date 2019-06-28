@@ -63,4 +63,26 @@ If you are using any patches on any projects, you will need to indicate them in 
         },
 ```
 
+In order for Drush to run properly, you will need to make sure your local.drush.yml and aliases.drushrc.php contain the correct settings. For example:
+```
+#local.drush.yml
+options:
+  uri: 'http://docksal-composer.docksal'
+```
+```
+#aliases.drushrc.php
+<?php
+// @docksal Drush alias
+$aliases['docksal'] = array(
+  'root' => '/var/www/docroot',
+  'uri' => 'docksal-composer.docksal',
+);
+// @self Drush alias
+$aliases['self'] = array(
+  'root' => '/var/www/docroot',
+  'uri' => 'docksal-composer.docksal',
+);
+```
+You will likely replace these when the site is published to Acquia, however. Download the Acquia aliases when that environment is made available and replace them here.
+
 Run `fin init`.

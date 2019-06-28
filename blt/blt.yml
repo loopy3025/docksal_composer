@@ -45,23 +45,4 @@ disable-targets:
 validate:
   twig:
     filters: [rgba_string, luma, field_value, field_raw]
-    functions:
-      [
-        drupal_block,
-        drupal_field,
-        drupal_view,
-        drupal_block,
-        drupal_region,
-        drupal_entity,
-        drupal_field,
-        drupal_menu,
-        drupal_form,
-        drupal_image,
-        drupal_token,
-        drupal_config,
-        drupal_title,
-        drupal_url,
-        drupal_link,
-        drupal_messages,
-        drupal_breadcrumb,
-      ]
+    functions: [drupal_block, drupal_field, drupal_view, drupal_block, drupal_region, drupal_entity, drupal_field, drupal_menu, drupal_form, drupal_image, drupal_token, drupal_config, drupal_title, drupal_url, drupal_link, drupal_messages, drupal_breadcrumb]

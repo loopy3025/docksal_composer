@@ -2,7 +2,7 @@ version: 1.1.0
 services:
   - mysql
   - php:
-      version: 7.1
+      version: 7.2
 
 variables:
   global:
@@ -12,37 +12,35 @@ variables:
 events:
   build:
     steps:
-      - setup-env:
-          type: script
-          script:
-            - echo 'STARTED'
-            - export PIPELINE_SSH_KEY=~/.ssh/my-key
-            - "eval `ssh-agent -s`" # start the ssh agent
-            - "ssh-add ~/.ssh/my-key" # add a key
-            - composer validate --no-check-all --ansi
-            - composer install --ansi
-            - source ${BLT_DIR}/scripts/pipelines/setup_env
-            # - nvm install v6.9.1
-            # - npm install --global yarn
-            - unset PIPELINE_SSH_KEY
-            - echo 'Step executed with default ssh keys'
-            - echo 'FINISHED'
-      - validate:
-          type: script
-          script:
-            - source ${BLT_DIR}/scripts/pipelines/validate
-      - setup-app:
-          type: script
-          script:
-            - source ${BLT_DIR}/scripts/pipelines/setup_app
-      #      - tests:
-      #          type: script
-      #          script:
-      #            - source ${BLT_DIR}/scripts/pipelines/tests
-      - build-artifact:
-          type: script
-          script:
-            - source ${BLT_DIR}/scripts/pipelines/build_artifact
+        - setup-env:
+            type: script
+            script:
+              - composer validate --no-check-all --ansi
+              - composer install --ansi
+              - source ${BLT_DIR}/scripts/pipelines/setup_env
+              # - nvm install v6.9.1
+              # - npm install --global yarn
+        - validate:
+            type: script
+            script:
+              - source ${BLT_DIR}/scripts/pipelines/validate
+        # Uncomment these lines to test database updates using live content.
+        # - test-updates:
+        #     type: script
+        #     script:
+        #       - blt drupal:sync:default:site
+        - setup-app:
+            type: script
+            script:
+              - source ${BLT_DIR}/scripts/pipelines/setup_app
+        - tests:
+            type: script
+            script:
+              - source ${BLT_DIR}/scripts/pipelines/tests
+        - build-artifact:
+            type: script
+            script:
+              - source ${BLT_DIR}/scripts/pipelines/build_artifact
   post-deploy:
     steps:
       - deploy:
@@ -58,6 +56,3 @@ events:
       - deploy:
           script:
             - pipelines-deploy
-ssh-keys:
-  my-key:
-    secure: 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

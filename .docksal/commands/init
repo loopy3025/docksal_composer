@@ -46,9 +46,10 @@ rm -f $DOCROOT_PATH/sites/default/local.drush.yml
 echo 'Creating local blt.yml file for database settings...'
 cp $PROJECT_ROOT/.docksal/default.docksal.local.blt.yml $PROJECT_ROOT/blt/local.blt.yml
 
+echo 'Creating local drush file...'
+cp $DOCROOT_PATH/sites/default/local.drush.yml $PROJECT_ROOT/local.drush.yml
+
 echo 'Running blt commands...'
 fin blt blt:init:settings
 fin blt drupal:install --no-interaction
 
-echo 'Creating local drush file...'
-cp $DOCROOT_PATH/sites/default/local.drush.yml $PROJECT_ROOT/local.drush.yml

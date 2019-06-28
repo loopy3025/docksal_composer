@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+## Run blt setup commands to prepare your local site for
+## development.
+##
+## Usage: fin init
+DOCROOT_PATH="${PROJECT_ROOT}/${DOCROOT}"
+# Initialize stack
+echo 'Initializing the docksal environment...'
+fin project start
+
+unameOut="$(uname -s)"
+case "${unameOut}" in
+    Linux*)     machine=Linux;;
+    Darwin*)    machine=Mac;;
+    CYGWIN*)    machine=Cygwin;;
+    MINGW*)     machine=MinGw;;
+    *)          machine="UNKNOWN:${unameOut}"
+esac
+
+# Import the certs
+# Should this be a different conditional?
+echo 'If this is a Windows machine, install the WebNY certs'
+if [[ machine == "MinGw" ]]; then
+	# Run this command manually for windows instead
+  fin webny/certs
+fi
+
+# Install project requirements
+echo 'Running Composer commands...'
+fin exec composer clear-cache
+fin exec COMPOSER_PROCESS_TIMEOUT=2000
+fin exec composer install
+
+# Set up blt
+cd $DOCROOT_PATH
+
+echo 'Removing non-blt settings files if they exist...'
+rm -f $DOCROOT_PATH/sites/default/settings/local.settings.php
+rm -f $DOCROOT_PATH/sites/default/local.drush.yml
+
+echo 'Creating local blt.yml file for database settings...'
+cp $PROJECT_ROOT/.docksal/default.docksal.local.blt.yml $PROJECT_ROOT/blt/local.blt.yml
+
+echo 'Running blt commands...'
+fin blt blt:init:settings
+fin blt drupal:install --no-interaction
+
+echo 'Creating local drush file...'
+cp $DOCROOT_PATH/sites/default/local.drush.yml $PROJECT_ROOT/local.drush.yml
